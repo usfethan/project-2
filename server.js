@@ -1,19 +1,29 @@
-const express = require('express');
-const path = require('path');
-// const exphbs = require('express-handlebars');
-// const routes = require ('');
-//const hbs = exphbs.create({  });
-
-const PORT = process.env.PORT || 3001;
+const express = require("express");
+const routes = require("./routes");
+const sequelize = require("./config/connection");
+const exphbs = require("express-handlebars");
+const { get } = require("./controllers/");
+const hbs = exphbs.create({});
 
 const app = express();
+const PORT = process.env.PORT || 3001;
 
-// app.engine('handlebars', hbs.engine);
-// app.set('view engine', 'handlebars');
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// turn on routes
+app.engine("handlebars", hbs.engine);
+app.set("view engine", "handlebars");
 
-app.get('/', (req, res) => 
-res.sendFile(path.join(__dirname, '/public/index.html')))
+app.use(routes);
+app.get("/", (req, res) => res.render("homepage"));
+app.get("/login", (req, res) => res.render("login_page"));
+app.get("/category", (req, res) => res.render("category"));
+app.get("/recipe_info", (req, res) => res.render("recipe_info"));
+app.get("/comment", (req, res) => res.render("comments"));
+app.get("/single_recipe", (req, res) => res.render("single_recipe"));
 
-
-app.listen(PORT, () => console.log('App listening on port ${PORT}'));
+// turn on connection to db and server
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () => console.log("Now listening"));
+});
