@@ -1,9 +1,9 @@
 const express = require("express");
-const routes = require("./routes");
+const routes = require("./controllers");
 const sequelize = require("./config/connection");
 const exphbs = require("express-handlebars");
-const routes = require("./controllers/");
-const hbs = exphbs.create({});
+const { get } = require("./controllers");
+const hbs = exphbs.create({ });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -17,11 +17,11 @@ app.set("view engine", "handlebars");
 
 app.use(routes);
 app.get("/", (req, res) => res.render("homepage"));
-app.get("/login", (req, res) => res.render("login_page"));
+app.get("/login-page", (req, res) => res.render("login-page"));
 app.get("/category", (req, res) => res.render("category"));
-app.get("/recipe_info", (req, res) => res.render("recipe_info"));
-app.get("/comment", (req, res) => res.render("comments"));
-app.get("/single_recipe", (req, res) => res.render("single_recipe"));
+app.get("/recipe-info", (req, res) => res.render("recipe-info"));
+app.get("/comments", (req, res) => res.render("comments"));
+app.get("/single-recipe", (req, res) => res.render("single-recipe"));
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
