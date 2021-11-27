@@ -15,6 +15,14 @@ Recipe.init (
             type: DataTypes.STRING,
             allowNull: false
         },
+        ingredients: {
+            type: DataTypes.TEXT('long'),
+            allowNull: false
+        },
+        preperation: {
+            type: DataTypes.TEXT('long'),
+            allowNull: false
+        },
         category: {
             type: DataTypes.STRING,
             allowNull: false
