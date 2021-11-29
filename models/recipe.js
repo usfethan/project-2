@@ -27,13 +27,6 @@ Recipe.init (
             type: DataTypes.STRING,
             allowNull: false
         },
-        image_url: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            validate: {
-                isURL: true
-            }
-        },
         user_id: {
             type: DataTypes.INTEGER,
             references: {
