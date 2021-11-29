@@ -1,6 +1,8 @@
 const router = require('express').Router();
 const { User, Recipe, Comment } = require('../models');
-
+router.get ('/', (req, res) => {
+    res.send('This is the homepage!!!');
+})
 //Find all recipes
 router.get('/recipes', (req, res) => {
     console.log(req.session)
