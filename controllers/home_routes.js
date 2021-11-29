@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { User, Recipe, Comment } = require('../modules');
+const { User, Recipe, Comment } = require('../models');
 
 //Find all recipes
 router.get('/recipes', (req, res) => {
@@ -58,3 +58,4 @@ router.get('/recipes/:id', (req, res) => {
     });
 })
 
+module.exports = router;
