@@ -1,7 +1,7 @@
-const express = require('express');
 const router = require('express').Router();
-const { User, Recipe, Comment } = require('../models');
 const { Op } = require('sequelize');
+const { Recipe, User, Comment } = require('../models');
+
 
 
 router.get('/', (req, res) => {
@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
             }
         },
         attributes: [
-            'id','title','ingredients','preperations','categroy'
-        ],
+            'id','title','ingredients','preperations','category'],
+
         order: [['created_at', 'DESC']],
         include: [
             {
@@ -42,6 +42,7 @@ router.get('/recipes', (req, res) => {
     console.log(req.session)
     Recipe.findAll ({
         attributes: ['id', 'title', 'category'],
+        order: [['created_at', 'DESC']],
         include: [ 
             {
                 model: User,
@@ -59,21 +60,15 @@ router.get('/recipes', (req, res) => {
     });
 });
 
-router.get('/recipes/:id', (req, res) => {
-    Recipe.findOne ({
+router.get('/recipes/category/:category', (req, res) => {
+    console.log(req.params.category)
+    Recipe.findAll({
         where: {
-            id: req.params.id
+            category: req.params.category
         },
         attributes: ['id', 'title', 'category'],
+        order: [['created_at', 'DESC']],
         include: [
-            {
-                model: Comment,
-                attributes: ['id', 'comment_text', 'user_id', 'recipe_id'],
-                include: {
-                    model: User,
-                    attributes: ['username']
-                }
-            },
             {
                 model: User,
                 attributes: ['username']
@@ -82,16 +77,27 @@ router.get('/recipes/:id', (req, res) => {
     })
     .then(dbPostData => {
         if(!dbPostData) {
-            res.status(404).json({message: 'No post found with this id!'});
+            res.status(404).json({message: 'No post found with this category'});
             return;
         }
-        const recipe = dbPostData.get({ plain: true});
-        res.render('single-recipe', { recipe, loggedIn: req.session.loggedIn});
+        const recipes = dbPostData.map(recipe => recipe.get({ plain: true}));
+        res.render('category', {
+            recipes, 
+            loggedIn: req.session.loggedIn
+        });
     })
     .catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
-})
+});
+
+router.get('/login', (req, res) => {
+    if(req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+    res.render('login-page', {layout: 'login'});
+});
 
 module.exports = router;
