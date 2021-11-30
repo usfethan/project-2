@@ -1,16 +1,22 @@
-const seedUser = require('./user_seed');
+const seedComments = require('./comment_seeds');
 const seedRecipe = require('./recipe_seed');
-const seedComment = require('./comment_seed');
+const seedUsers = require('./user_seeds');
 
 const sequelize = require('../config/connection');
-const { async } = require('rxjs');
+
 
 const seedAll = async () => {
     await sequelize.sync({ force: true});
+    console.log('-----------');
 
-    await seedCommentSeed();
-    await seedUserSeed();
-    await seedRecipeSeed();
+    await seedUsers();
+    console.log('-----------');
+
+    await seedRecipe();
+    console.log('-----------');
+
+    await seedComments();
+    console.log('-----------');
 
     process.exit(0);
 };
