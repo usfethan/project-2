@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
     Recipe.findAll ({
         where: {
             id: {
-                [Op.between]: []
+                [Op.between]: [1,5]
             }
         },
         attributes: [
