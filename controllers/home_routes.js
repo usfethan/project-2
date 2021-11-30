@@ -1,13 +1,47 @@
+const express = require('express');
 const router = require('express').Router();
 const { User, Recipe, Comment } = require('../models');
-router.get ('/', (req, res) => {
-    res.send('This is the homepage!!!');
-})
+const { Op } = require('sequelize');
+
+
+router.get('/', (req, res) => {
+    console.log(req.session)
+    Recipe.findAll ({
+        where: {
+            id: {
+                [Op.between]: []
+            }
+        },
+        attributes: [
+            'id','title','ingredients','preperations','categroy'
+        ],
+        order: [['created_at', 'DESC']],
+        include: [
+            {
+                model: User,
+                attributes: ['username']
+            }
+        ]
+    })
+    .then(dbPostData => {
+        const recipes = dbPostData.map(recipe => recipe.get({plain: true}));
+        res.render('homepage', {
+            recipes,
+            loggedIn: req.session.loggedIn
+        });
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json(err);
+    });
+  });
+
+
 //Find all recipes
 router.get('/recipes', (req, res) => {
     console.log(req.session)
     Recipe.findAll ({
-        attributes: ['id', 'title', 'category', 'image_url'],
+        attributes: ['id', 'title', 'category'],
         include: [ 
             {
                 model: User,
