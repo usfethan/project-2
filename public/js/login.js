@@ -16,7 +16,7 @@ async function loginFormHandler(event) {
 
         if(response.ok) {
             console.log('success');
-            document.location.replace(`/${email}`);
+            document.location.replace("/homepage");
         } else {
             alert ('Failed to log in!');
         }
@@ -41,19 +41,15 @@ async function signupFormHandler(event) {
 
         if(response.ok) {
             console.log('success');
-            document.location.replace(`/${email}`);
+            document.location.replace("/homepage");
         } else {
             alert ('Failed to sign up!');
         }
     }
 };
 
-const searcFormHandler = async (event) => {
-    event.preventDefault();
-    const email = document.querySelector('#email-search').value.trim();
-    document.location.replace(`/${email}`);
-};
 
-document.querySelector('.login-form')
-document.addEventListener('submit', signupFormHandler);
-document.querySelector('.search').addEventListener('submit', searcFormHandler);
+
+document
+    .querySelector(".login-form")
+    .addEventListener("submit", signupFormHandler);

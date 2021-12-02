@@ -35,12 +35,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(routes);
-// app.get("/", (req, res) => res.render("homepage"));
-// app.get("/login-page", (req, res) => res.render("login-page"));
-// app.get("/category", (req, res) => res.render("category"));
-// app.get("/recipe-info", (req, res) => res.render("recipe-info"));
-// app.get("/comments", (req, res) => res.render("comments"));
-// app.get("/single-recipe", (req, res) => res.render("single-recipe"));
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {

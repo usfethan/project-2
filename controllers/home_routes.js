@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Op } = require('sequelize');
-const { Recipe, User, Comment } = require('../models');
+const { Recipe, User } = require('../models');
 
 
 
@@ -12,8 +12,7 @@ router.get('/', (req, res) => {
                 [Op.between]: [1,5]
             }
         },
-        attributes: [
-            'id','title','ingredients','preperations','category'],
+        attributes: ['id','title','ingredients','preperations','category'],
 
         order: [['created_at', 'DESC']],
         include: [
