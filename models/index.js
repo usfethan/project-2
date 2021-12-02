@@ -18,4 +18,6 @@ Comment.belongsTo(Recipe, {
     foreignKey: "recipe_id",
 });
 
+
+
 module. exports = { User, Recipe, Comment};
