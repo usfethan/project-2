@@ -19,7 +19,7 @@ Recipe.init (
             type: DataTypes.TEXT('long'),
             allowNull: false
         },
-        preperation: {
+        preperations: {
             type: DataTypes.TEXT('long'),
             allowNull: false
         },
@@ -30,16 +30,17 @@ Recipe.init (
         user_id: {
             type: DataTypes.INTEGER,
             references: {
-                model: 'user',
-                key: 'id'
+                model: "user",
+                key: "id",
             }
         }
     },
     {
         sequelize,
+        timestamps: false,
         freezeTableName: true,
         underscored: true,
-        modelName: 'recipe'
+        modelName: "recipe"
     }
 );
 
