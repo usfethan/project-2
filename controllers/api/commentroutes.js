@@ -1,27 +1,27 @@
-const router = require('express').Router();
-const { comment } = require('../../models');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const { Comment } = require("../../models");
+const withAuth = require("../../utils/auth");
 
-//GET all comments
-router.get('/', (req, res) => {
-    comment.findAll () 
+//all comments
+router.get("/", (req, res) => {
+    Comment.findAll()
     .then(dbCommentData => res.json(dbCommentData))
-    .cath(err => {
+    .catch(err => {
         console.log(err);
         res.status(500).json(err);
     });
 });
 
-//POST comment
-router.post('/', withAuth, (req,res) => {
+//Post comment
+router.post("/", withAuth, (req, res) => {
     if(req.session) {
         Comment.create({
-            commet_text: req.body.comment_text,
+            comment_text: req.body.comment_text,
             recipe_id: req.body.recipe_id,
-            user_id: req.body.user_id,
+            user_id: req.session.user_id,
         })
         .then(dbCommentData => res.json(dbCommentData))
-        .cath(err => {
+        .catch(err => {
             console.log(err);
             res.status(400).json(err);
         });
