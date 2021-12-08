@@ -2,11 +2,13 @@ const { User } = require("../models");
 const router = require ("express").Router();
 const withAuth = require("../utils/auth.js");
 
+
+
 router.get('/homepage', withAuth, async(req, res) => {
     try {
         const userData = await User.findAll({
             attributes: {exclude: ['password']},
-            order: [['name', 'ASC']],
+            order: [['name', 'DESC']],
         });
         const users = userData.map((project) => project.get({plain: true}));
         res.render('homepage', {
