@@ -7,7 +7,7 @@ const { Recipe, User, Comment } = require("../../models");
 router.get("/recipes", (req, res) => {
     console.log(req.session)
     Recipe.findAll({
-        attributes: ["id", "title", "ingredients", "preperations","category" ],
+        attributes: ["id", "title", "ingredients", "preperations","category", "url" ],
         order: [["created_at", "DESC" ]],
         include: [
             {
@@ -33,7 +33,34 @@ router.get("/:category", (req, res) => {
         where: {
             category: req.params.category
         },
-        attributes: ["id", "title", "ingredients", "preperations","category" ],
+        attributes: ["id", "title", "ingredients", "preperations","category", "url"],
+        order: [["created_at", "DESC" ]],
+        include: [
+            {
+                model: Comment,
+                attributes: ["id", "comment_text", "user_id", "recipe_id" ],
+                include: {
+                    model: User,
+                    attributes: ["username"]
+                }
+            }
+        ]
+    })
+    .then(dbPostData => res.json(dbPostData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
+
+//Single recipe
+router.get("/:category", (req, res) => {
+    Recipe.findOne({
+        where: {
+            category: req.params.category
+        },
+        attributes: ["id", "title", "ingredients", "preperations","category", "url"],
         order: [["created_at", "DESC" ]],
         include: [
             {
