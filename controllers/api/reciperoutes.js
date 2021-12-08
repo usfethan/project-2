@@ -55,10 +55,10 @@ router.get("/:category", (req, res) => {
 
 
 //Single recipe
-router.get("/:category", (req, res) => {
+router.get("/:recipes", (req, res) => {
     Recipe.findOne({
         where: {
-            category: req.params.category
+            recipe: req.params.recipes
         },
         attributes: ["id", "title", "ingredients", "preperations","category", "url"],
         order: [["created_at", "DESC" ]],
