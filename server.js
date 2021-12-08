@@ -44,7 +44,16 @@ app.get('/', function(req, res) {
   res.render('homepage');
 });
 
+app.get('/recipes', function(req, res) {
+  res.render('recipe');
+});
+
+app.get('/category', function(req, res) {
+  res.render('category');
+});
+
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () => console.log("Now listening on " + PORT));
 });
+

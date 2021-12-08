@@ -14,5 +14,25 @@
     padding-right: var(--bs-gutter-x,.75rem);
     padding-left: var(--bs-gutter-x,.75rem);
     margin-right: auto;
-    margin-left: auto;   
+    margin-left: auto; 
+     
 }
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: var(--darkest-blue) !important;
+    background-color: var(--most-green) !important;
+    height: 2.5em;
+    margin-top: 0px !important;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    color: var(--most-green);
+  }
