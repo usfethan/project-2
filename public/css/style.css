@@ -1,0 +1,18 @@
+:root {
+    --Rich-black: #001219;
+    --viridian-green: #0A9396;
+    --middle-blue-green: #94D2BD;
+    --gamboge: #EE9B00;
+    --ruby-red: #9B2226;
+}
+
+
+
+.container-fluid {
+    display: inline-block;
+    width: 100%;
+    padding-right: var(--bs-gutter-x,.75rem);
+    padding-left: var(--bs-gutter-x,.75rem);
+    margin-right: auto;
+    margin-left: auto;   
+}

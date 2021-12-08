@@ -22,16 +22,27 @@ const sess = {
 
 app.use(session(sess));
 
-// turn on routes
-app.engine("handlebars", hbs.engine);
-app.set("view engine", "handlebars");
+app.set('views', path.join(__dirname, 'views'));
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+// turn on routes
+// app.engine("handlebars", hbs.engine);
+// app.engine("handlebars", exphbs({defaultLayout: 'main'}));
+// app.set("view engine", "handlebars");
+
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+// app.use(express.static(path.join(__dirname, 'views')));
 
 
 app.use(routes);
+
+app.get('/', function(req, res) {
+  res.render('homepage');
+});
 
 // turn on connection to db and server
 sequelize.sync({ force: false }).then(() => {

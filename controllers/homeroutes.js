@@ -1,41 +1,29 @@
-const { User, Recipe, Comment } = require("../models");
+const { User } = require("../models");
 const router = require ("express").Router();
 const withAuth = require("../utils/auth.js");
 
-//login page
-router.get("/login", async (req, res) => {
+router.get('/homepage', withAuth, async(req, res) => {
     try {
-        res.render("login", {
-            loggedIn: req.session.loggedIn,
+        const userData = await User.findAll({
+            attributes: {exclude: ['password']},
+            order: [['name', 'ASC']],
+        });
+        const users = userData.map((project) => project.get({plain: true}));
+        res.render('homepage', {
+            users, loggedIn: req.session.logged_in,
         });
     } catch(err) {
-        console.log(err);
         res.status(500).json(err);
     }
 });
 
-//homepage
-router.get("/homepage", withAuth, async (req, res) => {
-    try {
-        res.render("homepage", {
-            loggedIn: req.session.loggedIn,
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
+router.get('/login', (req, res) => {
+    if (req.session.logged_in) {
+      res.redirect('/');
+      return;
     }
-});
-
-//Recipes
-router.get("/recipe", async (req, res) => {
-    try {
-        res.render("recipe", {
-            loggedIn: req.session.loggedIn,
-        });
-    } catch (err) {
-        console.log(err);
-        res.status(500).json(err);
-    }
-});
+  
+    res.render('login');
+  });
 
 module.exports = router;
